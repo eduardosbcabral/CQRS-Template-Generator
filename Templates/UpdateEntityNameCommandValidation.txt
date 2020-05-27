@@ -1,0 +1,18 @@
+﻿using %CoreProjectName%.Domain.Commands;
+
+namespace %CoreProjectName%.Domain.Validations
+{
+    public class Update%EntityName%CommandValidation : %EntityName%Validation<%EntityName%Command>
+    {
+        public Update%EntityName%CommandValidation()
+        {
+            ValidateId();
+            ValidateBrand();
+            ValidateModel();
+            ValidatePlatformId();
+            ValidateImageUrl();
+            ValidateUrl();
+            ValidatePlatform();
+        }
+    }
+}

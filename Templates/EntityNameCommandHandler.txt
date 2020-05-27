@@ -1,0 +1,122 @@
+﻿using %CoreProjectName%.Domain.Commands;
+using %CoreProjectName%.Domain.Core.Bus;
+using %CoreProjectName%.Domain.Core.Notifications;
+using %CoreProjectName%.Domain.Entities;
+using %CoreProjectName%.Domain.Events;
+using %CoreProjectName%.Domain.Interfaces;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace %CoreProjectName%.Domain.CommandHandlers
+{
+    public class %EntityName%CommandHandler : CommandHandler,
+        IRequestHandler<Register%EntityName%Command, bool>,
+        IRequestHandler<Update%EntityName%Command, bool>,
+        IRequestHandler<Remove%EntityName%Command, bool>
+    {
+        private readonly IMediatorHandler Bus;
+        private readonly I%EntityName%Repository _%EntityNameLowerCase%Repository;
+
+        public %EntityName%CommandHandler(
+            IUnitOfWork uow,
+            IMediatorHandler bus,
+            INotificationHandler<DomainNotification> notifications,
+            I%EntityName%Repository %EntityNameLowerCase%Repository)
+            : base(uow, bus, notifications)
+        {
+            Bus = bus;
+            _%EntityNameLowerCase%Repository = %EntityNameLowerCase%Repository;
+        }
+
+        public Task<bool> Handle(Register%EntityName%Command request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return Task.FromResult(false);
+            }
+
+            var %EntityNameLowerCase% = new %EntityName%(
+                request.Brand,
+                request.Model,
+                request.PlatformId,
+                request.ImageUrl,
+                request.Url,
+                request.Platform);
+
+            if (_%EntityNameLowerCase%Repository.GetByPlatformId(%EntityNameLowerCase%.PlatformId) != null)
+            {
+                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
+                return Task.FromResult(false);
+            }
+
+            _%EntityNameLowerCase%Repository.Add(%EntityNameLowerCase%);
+
+            if (Commit())
+            {
+                Bus.RaiseEvent(new %EntityName%RegisteredEvent(%EntityNameLowerCase%.Id, %EntityNameLowerCase%.Brand, %EntityNameLowerCase%.Model));
+            }
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> Handle(Update%EntityName%Command request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return Task.FromResult(false);
+            }
+
+            if (!_%EntityNameLowerCase%Repository.Exists(request.Id))
+            {
+                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente não existente."));
+                return Task.FromResult(false);
+            }
+
+            var %EntityNameLowerCase% = _%EntityNameLowerCase%Repository.GetByPlatformId(request.PlatformId);
+
+            if (%EntityNameLowerCase% != null && %EntityNameLowerCase%.Id != request.Id)
+            {
+                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
+                return Task.FromResult(false);
+            }
+
+            %EntityNameLowerCase%.Update(
+                request.PlatformId,
+                request.ImageUrl,
+                request.Url,
+                request.Platform,
+                request.Brand,
+                request.Model);
+
+            _%EntityNameLowerCase%Repository.Update(%EntityNameLowerCase%);
+
+            if (Commit())
+            {
+                Bus.RaiseEvent(new %EntityName%UpdatedEvent(%EntityNameLowerCase%.Id, %EntityNameLowerCase%.Brand, %EntityNameLowerCase%.Model));
+            }
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> Handle(Remove%EntityName%Command request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return Task.FromResult(false);
+            }
+
+            _%EntityNameLowerCase%Repository.Remove(request.Id);
+
+            if (Commit())
+            {
+                Bus.RaiseEvent(new %EntityName%RemovedEvent(request.Id));
+            }
+
+            return Task.FromResult(true);
+        }
+    }
+}

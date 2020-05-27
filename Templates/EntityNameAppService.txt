@@ -1,0 +1,63 @@
+﻿using AutoMapper;
+using %CoreProjectName%.Application.Interfaces;
+using %CoreProjectName%.Application.ViewModels.%EntityName%;
+using %CoreProjectName%.Domain.Commands;
+using %CoreProjectName%.Domain.Core.Bus;
+using %CoreProjectName%.Domain.Interfaces;
+using %CoreProjectName%.Infrastructure.Common.Pagination;
+using System;
+
+namespace %CoreProjectName%.Application.Services
+{
+    public class %EntityName%AppService : I%EntityName%AppService
+    {
+        private readonly IMapper _mapper;
+        private readonly IMediatorHandler Bus;
+
+        private readonly I%EntityName%Repository _%EntityNameLowerCase%Repository;
+
+        public %EntityName%AppService(
+            IMapper mapper,
+            IMediatorHandler bus,
+            I%EntityName%Repository %EntityNameLowerCase%Repository)
+        {
+            _mapper = mapper;
+            Bus = bus;
+
+            _%EntityNameLowerCase%Repository = %EntityNameLowerCase%Repository;
+        }
+
+        #region Commands
+        public void Register(%EntityName%ViewModel %EntityNameLowerCase%ViewModel)
+        {
+            var registerCommand = _mapper.Map<Register%EntityName%Command>(%EntityNameLowerCase%ViewModel);
+            Bus.SendCommand(registerCommand);
+        }
+
+        public void Update(%EntityName%ViewModel %EntityNameLowerCase%ViewModel)
+        {
+            var updateCommand = _mapper.Map<Update%EntityName%Command>(%EntityNameLowerCase%ViewModel);
+            Bus.SendCommand(updateCommand);
+        }
+
+        public void Remove(Guid id)
+        {
+            var removeCommand = new Remove%EntityName%Command(id);
+            Bus.SendCommand(removeCommand);
+        }
+        #endregion
+
+        #region Queries
+        public %EntityName%ViewModel GetById(Guid id)
+        {
+            var %EntityNameLowerCase% = _%EntityNameLowerCase%Repository.GetById(id);
+            return _mapper.Map<%EntityName%ViewModel>(%EntityNameLowerCase%);
+        }
+
+        public PaginationObject<%EntityName%ViewModel> ListPaginated(int? page)
+        {
+            return _%EntityNameLowerCase%Repository.ListPaginated(page);
+        }
+        #endregion
+    }
+}

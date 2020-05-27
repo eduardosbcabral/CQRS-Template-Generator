@@ -1,0 +1,123 @@
+﻿using %CoreProjectName%.Application.Interfaces;
+using %CoreProjectName%.Application.ViewModels.%EntityName%;
+using %CoreProjectName%.Domain.Core.Notifications;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System;
+
+namespace %SolutionName%.Web.Controllers
+{
+    [Route("admin/nome-do-componente")]
+    public class Admin%EntityName%Controller : BaseController
+    {
+        private readonly I%EntityName%AppService _%EntityNameLowerCase%AppService;
+
+        public Admin%EntityName%Controller(
+            INotificationHandler<DomainNotification> notifications,
+            I%EntityName%AppService %EntityNameLowerCase%AppService) 
+            : base(notifications)
+        {
+            _%EntityNameLowerCase%AppService = %EntityNameLowerCase%AppService;
+        }
+
+        [HttpGet("list")]
+        public IActionResult Index(int? page)
+        {
+            var paginationObject = _%EntityNameLowerCase%AppService.ListPaginated(page);
+            return View(paginationObject);
+        }
+
+        [HttpGet("register")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost("register")]
+        public IActionResult Create(%EntityName%ViewModel %EntityNameLowerCase%ViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(%EntityNameLowerCase%ViewModel);
+            }
+
+            _%EntityNameLowerCase%AppService.Register(%EntityNameLowerCase%ViewModel);
+
+            if (IsValidOperation())
+            {
+                ViewBag.Success = "(COLOCAR NOME DO COMPONENTE) registrada.";
+            }
+
+            return View(%EntityNameLowerCase%ViewModel);
+        }
+
+        [HttpGet("edit/{id:guid}")]
+        public IActionResult Edit(Guid? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            var %EntityNameLowerCase%ViewModel = _%EntityNameLowerCase%AppService.GetById(id.Value);
+
+            if (%EntityNameLowerCase%ViewModel is null)
+            {
+                return NotFound();
+            }
+
+            return View(%EntityNameLowerCase%ViewModel);
+        }
+
+        [HttpPost("edit/{id:guid}")]
+        public IActionResult Edit(%EntityName%ViewModel %EntityNameLowerCase%ViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(%EntityNameLowerCase%ViewModel);
+            }
+
+            _%EntityNameLowerCase%AppService.Update(%EntityNameLowerCase%ViewModel);
+
+            if (IsValidOperation())
+            {
+                ViewBag.Success = "(COLOCAR NOME DO COMPONENTE) atualizada.";
+            }
+
+            return View(%EntityNameLowerCase%ViewModel);
+        }
+
+        [HttpGet("remove/{id:guid}")]
+        public IActionResult Delete(Guid? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            var %EntityNameLowerCase%ViewModel = _%EntityNameLowerCase%AppService.GetById(id.Value);
+
+            if (%EntityNameLowerCase%ViewModel is null)
+            {
+                return NotFound();
+            }
+
+            return View(%EntityNameLowerCase%ViewModel);
+        }
+
+        [HttpPost("remove/{id:guid}")]
+        public IActionResult DeleteConfirmed(Guid id)
+        {
+            _%EntityNameLowerCase%AppService.Remove(id);
+
+            if (!IsValidOperation())
+            {
+                return Delete(id);
+            }
+
+            ViewBag.Success = "(COLOCAR NOME DO COMPONENTE) removida.";
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}

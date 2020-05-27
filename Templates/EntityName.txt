@@ -1,0 +1,37 @@
+﻿using %CoreProjectName%.Domain.Enums;
+using System;
+
+namespace %CoreProjectName%.Domain.Entities
+{
+    public class %EntityName% : ComponentBase
+    {
+        public %EntityName%(
+            string brand,
+            string model,
+            string platformId,
+            string imageUrl,
+            string url,
+            EPlatform platform)
+            : base(brand, model, platformId, imageUrl, url, platform)
+        {
+        }
+
+        public void Update(
+            string platformId,
+            string imageUrl,
+            string url,
+            EPlatform platform,
+            string brand,
+            string model)
+        {
+            PlatformId = platformId;
+            ImageUrl = imageUrl;
+            Url = url;
+            Platform = platform;
+            Brand = brand;
+            Model = model;
+
+            UpdatedAt = DateTime.Now;
+        }
+    }
+}

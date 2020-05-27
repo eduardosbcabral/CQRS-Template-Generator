@@ -1,0 +1,29 @@
+﻿using %CoreProjectName%.Domain.Events;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace %CoreProjectName%.Domain.EventHandlers
+{
+    public class %EntityName%EventHandler :
+        INotificationHandler<%EntityName%RegisteredEvent>,
+        INotificationHandler<%EntityName%UpdatedEvent>,
+        INotificationHandler<%EntityName%RemovedEvent>
+    {
+
+        public Task Handle(%EntityName%RegisteredEvent message, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(%EntityName%UpdatedEvent message, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(%EntityName%RemovedEvent message, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+    }
+}

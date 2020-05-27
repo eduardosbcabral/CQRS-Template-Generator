@@ -1,0 +1,33 @@
+﻿using %CoreProjectName%.Domain.Enums;
+using %CoreProjectName%.Domain.Validations;
+using System;
+
+namespace %CoreProjectName%.Domain.Commands
+{
+    public class Update%EntityName%Command : %EntityName%Command
+    {
+        public Update%EntityName%Command(
+            Guid id,
+            string platformId,
+            string imageUrl,
+            string url,
+            EPlatform platform,
+            string brand,
+            string model)
+        {
+            Id = id;
+            PlatformId = platformId;
+            ImageUrl = imageUrl;
+            Url = url;
+            Platform = platform;
+            Brand = brand;
+            Model = model;
+        }
+
+        public override bool IsValid()
+        {
+            ValidationResult = new Update%EntityName%CommandValidation().Validate(this);
+            return ValidationResult.IsValid;
+        }
+    }
+}

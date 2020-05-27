@@ -1,0 +1,65 @@
+﻿@using %CoreProjectName%.Application.ViewModels.%EntityName%;
+@using %CoreProjectName%.Infrastructure.Common.Pagination;
+@model PaginationObject<%EntityName%ViewModel>
+
+@{
+    ViewData["Title"] = "(COLOCAR NOME DO COMPONENTE)";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create">Criar Novo</a>
+</p>
+
+<p>
+    <a asp-action="Import">Importar (COLOCAR NOME DO COMPONENTE)</a>
+</p>
+
+<br />
+
+@Html.PaginationElement(Model)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Platform)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Result)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Platform)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                        <span class="fas fa-edit"></span>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
+                        <span class="fas fa-search"></span>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                        <span class="fas fa-trash-alt"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

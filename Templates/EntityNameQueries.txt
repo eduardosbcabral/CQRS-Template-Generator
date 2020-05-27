@@ -1,0 +1,12 @@
+﻿using %CoreProjectName%.Domain.Entities;
+using System;
+using System.Linq.Expressions;
+
+namespace %CoreProjectName%.Domain.Queries
+{
+    public static class %EntityName%Queries
+    {
+        public static Expression<Func<%EntityName%, bool>> GetByPlatformId(string platformId) =>
+            x => x.PlatformId == platformId;
+    }
+}

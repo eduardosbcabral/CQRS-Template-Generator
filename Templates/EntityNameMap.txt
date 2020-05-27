@@ -1,0 +1,21 @@
+﻿using %CoreProjectName%.Domain.Entities;
+using %CoreProjectName%.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+
+namespace %CoreProjectName%.Infrastructure.Config.Maps
+{
+    class %EntityName%Map : EntityBaseMap<%EntityName%>, IEntityTypeConfiguration<%EntityName%>, IEntityMap
+    {
+        public void Configure(EntityTypeBuilder<%EntityName%> builder)
+        {
+            DefaultMapping(builder, "%EntityNameTableDatabase%");
+
+            builder.Property(e => e.Platform)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (EPlatform)Enum.Parse(typeof(EPlatform), v));
+        }
+    }
+}

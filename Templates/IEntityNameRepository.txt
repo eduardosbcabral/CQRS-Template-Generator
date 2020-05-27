@@ -1,0 +1,14 @@
+﻿using %CoreProjectName%.Application.ViewModels.%EntityName%;
+using %CoreProjectName%.Domain.Entities;
+using %CoreProjectName%.Infrastructure.Common.Pagination;
+using System;
+
+namespace %CoreProjectName%.Domain.Interfaces
+{
+    public interface I%EntityName%Repository : IRepository<%EntityName%>
+    {
+        %EntityName% GetByPlatformId(string platformId);
+        PaginationObject<%EntityName%ViewModel> ListPaginated(int? page);
+        bool Exists(Guid id);
+    }
+}

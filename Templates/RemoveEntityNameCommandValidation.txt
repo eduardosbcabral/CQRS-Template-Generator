@@ -1,0 +1,12 @@
+﻿using %CoreProjectName%.Domain.Commands;
+
+namespace %CoreProjectName%.Domain.Validations
+{
+    public class Remove%EntityName%CommandValidation : %EntityName%Validation<%EntityName%Command>
+    {
+        public Remove%EntityName%CommandValidation()
+        {
+            ValidateId();
+        }
+    }
+}

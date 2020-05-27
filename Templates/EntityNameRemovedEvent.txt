@@ -1,0 +1,15 @@
+﻿using %CoreProjectName%.Domain.Core.Events;
+using System;
+
+namespace %CoreProjectName%.Domain.Events
+{
+    public class %EntityName%RemovedEvent : Event
+    {
+        public Guid Id { get; set; }
+
+        public %EntityName%RemovedEvent(Guid id)
+        {
+            Id = id;
+        }
+    }
+}

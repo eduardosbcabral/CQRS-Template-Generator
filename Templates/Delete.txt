@@ -1,0 +1,65 @@
+﻿@model %CoreProjectName%.Application.ViewModels.%EntityName%.%EntityName%ViewModel;
+
+@{
+    ViewData["Title"] = "Remover (COLOCAR NOME DO COMPONENTE)";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Delete">
+    <vc:summary />
+
+    <h3>Tem certeza de que deseja remover o componente: @Model.Brand @Model.Model?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Brand)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Brand)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Model)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PlatformId)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PlatformId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ImageUrl)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Url)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Url)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Platform)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Platform)
+            </dd>
+        </dl>
+
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Remover" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-info">Voltar para a lista</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,78 @@
+﻿@model %CoreProjectName%.Application.ViewModels.%EntityName%.%EntityName%ViewModel;
+@using %CoreProjectName%.Domain.Enums;
+
+@{
+    ViewData["Title"] = "Editar (COLOCAR NOME DO COMPONENTE)";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <hr />
+
+        <vc:summary />
+
+        <div class="form-group">
+            <label asp-for="Brand" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Model" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PlatformId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PlatformId" class="form-control" />
+                <span asp-validation-for="PlatformId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ImageUrl" type="text" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Url" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Url" type="text" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Platform" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="Platform" asp-items="@Html.GetEnumSelectList<EPlatform>()" class="form-control">
+                    <option>Selecione a plataforma</option>
+                </select>
+                <span asp-validation-for="Platform" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success">
+                <a asp-action="Index" class="btn btn-info">Voltar para a lista</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,47 @@
+﻿using AutoMapper;
+using %CoreProjectName%.Application.ViewModels.%EntityName%;
+using %CoreProjectName%.Domain.Entities;
+using %CoreProjectName%.Domain.Interfaces;
+using %CoreProjectName%.Domain.Queries;
+using %CoreProjectName%.Infrastructure.Common.Pagination;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+
+namespace %CoreProjectName%.Infrastructure.Repositories
+{
+    public class %EntityName%Repository : Repository<%EntityName%>, I%EntityName%Repository
+    {
+        private readonly IMapper _mapper;
+
+        public %EntityName%Repository(
+            %SolutionName%DbContext context,
+            IMapper mapper) 
+            : base(context)
+        {
+            _mapper = mapper;
+        }
+
+        public %EntityName% GetByPlatformId(string platformId)
+        {
+            return DbSet
+                .AsNoTracking()
+                .FirstOrDefault(%EntityName%Queries.GetByPlatformId(platformId));
+        }
+
+        public PaginationObject<%EntityName%ViewModel> ListPaginated(int? page)
+        {
+            return DbSet
+                .AsNoTracking()
+                .Pagination<%EntityName%, %EntityName%ViewModel>(_mapper, page);
+        }
+
+        public bool Exists(Guid id)
+        {
+            return DbSet
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .Any();
+        }
+    }
+}

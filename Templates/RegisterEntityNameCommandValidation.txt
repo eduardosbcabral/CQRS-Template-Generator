@@ -1,0 +1,17 @@
+﻿using %CoreProjectName%.Domain.Commands;
+
+namespace %CoreProjectName%.Domain.Validations
+{
+    public class Register%EntityName%CommandValidation : %EntityName%Validation<%EntityName%Command>
+    {
+        public Register%EntityName%CommandValidation()
+        {
+            ValidateBrand();
+            ValidateModel();
+            ValidatePlatformId();
+            ValidateImageUrl();
+            ValidateUrl();
+            ValidatePlatform();
+        }
+    }
+}

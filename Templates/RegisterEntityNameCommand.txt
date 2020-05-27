@@ -1,0 +1,30 @@
+﻿using %CoreProjectName%.Domain.Enums;
+using %CoreProjectName%.Domain.Validations;
+
+namespace %CoreProjectName%.Domain.Commands
+{
+    public class Register%EntityName%Command : %EntityName%Command
+    {
+        public Register%EntityName%Command(
+            string platformId,
+            string imageUrl,
+            string url,
+            EPlatform platform,
+            string brand,
+            string model)
+        {
+            PlatformId = platformId;
+            ImageUrl = imageUrl;
+            Url = url;
+            Platform = platform;
+            Brand = brand;
+            Model = model;
+        }
+
+        public override bool IsValid()
+        {
+            ValidationResult = new Register%EntityName%CommandValidation().Validate(this);
+            return ValidationResult.IsValid;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+﻿using %CoreProjectName%.Application.ViewModels.%EntityName%;
+using %CoreProjectName%.Infrastructure.Common.Pagination;
+using System;
+
+namespace %CoreProjectName%.Application.Interfaces
+{
+    public interface I%EntityName%AppService
+    {
+        void Register(%EntityName%ViewModel %EntityNameLowerCase%ViewModel);
+        void Update(%EntityName%ViewModel %EntityNameLowerCase%ViewModel);
+        void Remove(Guid id);
+
+        %EntityName%ViewModel GetById(Guid id);
+        PaginationObject<%EntityName%ViewModel> ListPaginated(int? page);
+    }
+}
