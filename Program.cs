@@ -148,7 +148,7 @@ namespace CQRSTempGen
                 new Tuple<string, string, string>("Core\\Application\\Services", "EntityNameAppService", ".cs"),
                 new Tuple<string, string, string>("Core\\Application\\Interfaces", "IEntityNameAppService", ".cs"),
                 new Tuple<string, string, string>("Core\\Application\\ViewModels\\EntityName", "EntityNameViewModel", ".cs"),
-                new Tuple<string, string, string>("Core\\Domain\\CommandHandlers", "EntityNameCommandHandler", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\CommandHandlers\\EntityName", "EntityNameCommandHandler", ".cs"),
                 new Tuple<string, string, string>("Core\\Domain\\Commands\\EntityName", "EntityNameCommand", ".cs"),
                 new Tuple<string, string, string>("Core\\Domain\\Commands\\EntityName", "RegisterEntityNameCommand", ".cs"),
                 new Tuple<string, string, string>("Core\\Domain\\Commands\\EntityName", "RemoveEntityNameCommand", ".cs"),
