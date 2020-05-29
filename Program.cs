@@ -164,7 +164,7 @@ namespace CQRSTempGen
                 new Tuple<string, string, string>("Core\\Domain\\Validations", "RegisterEntityNameCommandValidation", ".cs"),
                 new Tuple<string, string, string>("Core\\Domain\\Validations", "RemoveEntityNameCommandValidation", ".cs"),
                 new Tuple<string, string, string>("Core\\Domain\\Validations", "UpdateEntityNameCommandValidation", ".cs"),
-                new Tuple<string, string, string>("Core\\Infrastructure\\Config.Maps", "EntityNameMap", ".cs"),
+                new Tuple<string, string, string>("Core\\Infrastructure\\Config\\Maps", "EntityNameMap", ".cs"),
                 new Tuple<string, string, string>("Core\\Infrastructure\\Repositories", "EntityNameRepository", ".cs"),
                 new Tuple<string, string, string>("Web\\Controllers", "EntityNameController", ".cs"),
                 new Tuple<string, string, string>("Web\\Views\\EntityName", "Create", ".cshtml"),
