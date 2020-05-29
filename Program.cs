@@ -40,6 +40,15 @@ namespace CQRSTempGen
             Console.WriteLine("Database table name: ");
             var tableDatabaseEntity = Console.ReadLine();
 
+            Console.WriteLine("Copy files to solution? (y/n): ");
+            var copyFilesToSolution = Console.ReadLine();
+
+            while (copyFilesToSolution != "y" && copyFilesToSolution != "n")
+            {
+                Console.WriteLine("Invalid anwser. Copy files to solution? (y/n): ");
+                copyFilesToSolution = Console.ReadLine();
+            }
+
             var coreProjectName = Directory.GetDirectories(solutionFolder, "*.Core")
                 .FirstOrDefault()
                 .Split("\\")
@@ -62,15 +71,35 @@ namespace CQRSTempGen
                 if (!Directory.Exists(outputFolder))
                     Directory.CreateDirectory(outputFolder);
 
-                var outputFile = Path.Combine(
+                if (copyFilesToSolution == "n")
+                {
+                    var outputFile = Path.Combine(
                     OUTPUT_PATH,
                     template.Item1,
                     template.Item2.Replace("EntityName", entityName) + template.Item3);
 
-                File.WriteAllText(outputFile, text);
+                    File.WriteAllText(outputFile, text);
+                    Console.WriteLine("Project files generated in output folder!");
+
+                }
+                else
+                {
+                    var outputSolutionFileFolder = Path.Combine(
+                        solutionFolder,
+                        $"{solutionProjectName}.{template.Item1.Replace("EntityName", entityName)}");
+
+                    if (!Directory.Exists(outputSolutionFileFolder))
+                        Directory.CreateDirectory(outputSolutionFileFolder);
+
+                    File.WriteAllText(Path.Combine(
+                        outputSolutionFileFolder, 
+                        template.Item2.Replace("EntityName", entityName) + template.Item3),
+                    text);
+
+                    Console.WriteLine("Project files copied to solution folder!");
+                }
             }
 
-            Console.WriteLine("Project files generated!");
         }
 
         static string BuildEntityNameDatabaseTable(string input)
@@ -116,32 +145,32 @@ namespace CQRSTempGen
         static List<Tuple<string, string, string>> GetTemplateFiles() =>
             new List<Tuple<string, string, string>>
             {
-                new Tuple<string, string, string>("Services", "EntityNameAppService", ".cs"),
-                new Tuple<string, string, string>("Services", "IEntityNameAppService", ".cs"),
-                new Tuple<string, string, string>("ViewModels", "EntityNameViewModel", ".cs"),
-                new Tuple<string, string, string>("CommandHandlers", "EntityNameCommandHandler", ".cs"),
-                new Tuple<string, string, string>("Commands", "EntityNameCommand", ".cs"),
-                new Tuple<string, string, string>("Commands", "RegisterEntityNameCommand", ".cs"),
-                new Tuple<string, string, string>("Commands", "RemoveEntityNameCommand", ".cs"),
-                new Tuple<string, string, string>("Commands", "UpdateEntityNameCommand", ".cs"),
-                new Tuple<string, string, string>("Entities", "EntityName", ".cs"),
-                new Tuple<string, string, string>("EventHandlers", "EntityNameEventHandler", ".cs"),
-                new Tuple<string, string, string>("Events", "EntityNameRegisteredEvent", ".cs"),
-                new Tuple<string, string, string>("Events", "EntityNameRemovedEvent", ".cs"),
-                new Tuple<string, string, string>("Events", "EntityNameUpdatedEvent", ".cs"),
-                new Tuple<string, string, string>("Interfaces", "IEntityNameRepository", ".cs"),
-                new Tuple<string, string, string>("Queries", "EntityNameQueries", ".cs"),
-                new Tuple<string, string, string>("Validations", "EntityNameValidation", ".cs"),
-                new Tuple<string, string, string>("Validations", "RegisterEntityNameCommandValidation", ".cs"),
-                new Tuple<string, string, string>("Validations", "RemoveEntityNameCommandValidation", ".cs"),
-                new Tuple<string, string, string>("Validations", "UpdateEntityNameCommandValidation", ".cs"),
-                new Tuple<string, string, string>("Maps", "EntityNameMap", ".cs"),
-                new Tuple<string, string, string>("Repositories", "EntityNameRepository", ".cs"),
-                new Tuple<string, string, string>("Controllers", "EntityNameController", ".cs"),
-                new Tuple<string, string, string>("Views", "Create", ".cshtml"),
-                new Tuple<string, string, string>("Views", "Delete", ".cshtml"),
-                new Tuple<string, string, string>("Views", "Edit", ".cshtml"),
-                new Tuple<string, string, string>("Views", "Index", ".cshtml"),
+                new Tuple<string, string, string>("Core\\Application\\Services", "EntityNameAppService", ".cs"),
+                new Tuple<string, string, string>("Core\\Application\\Interfaces", "IEntityNameAppService", ".cs"),
+                new Tuple<string, string, string>("Core\\Application\\ViewModels\\EntityName", "EntityNameViewModel", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\CommandHandlers", "EntityNameCommandHandler", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Commands", "EntityNameCommand", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Commands", "RegisterEntityNameCommand", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Commands", "RemoveEntityNameCommand", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Commands", "UpdateEntityNameCommand", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Entities", "EntityName", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\EventHandlers", "EntityNameEventHandler", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Events", "EntityNameRegisteredEvent", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Events", "EntityNameRemovedEvent", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Events", "EntityNameUpdatedEvent", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Interfaces", "IEntityNameRepository", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Queries", "EntityNameQueries", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Validations", "EntityNameValidation", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Validations", "RegisterEntityNameCommandValidation", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Validations", "RemoveEntityNameCommandValidation", ".cs"),
+                new Tuple<string, string, string>("Core\\Domain\\Validations", "UpdateEntityNameCommandValidation", ".cs"),
+                new Tuple<string, string, string>("Core\\Infrastructure\\Config.Maps", "EntityNameMap", ".cs"),
+                new Tuple<string, string, string>("Core\\Infrastructure\\Repositories", "EntityNameRepository", ".cs"),
+                new Tuple<string, string, string>("Web\\Controllers", "EntityNameController", ".cs"),
+                new Tuple<string, string, string>("Web\\Views\\EntityName", "Create", ".cshtml"),
+                new Tuple<string, string, string>("Web\\Views\\EntityName", "Delete", ".cshtml"),
+                new Tuple<string, string, string>("Web\\Views\\EntityName", "Edit", ".cshtml"),
+                new Tuple<string, string, string>("Web\\Views\\EntityName", "Index", ".cshtml"),
             };
     }
 }
